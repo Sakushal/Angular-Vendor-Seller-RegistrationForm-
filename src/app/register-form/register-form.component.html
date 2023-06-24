@@ -1,0 +1,663 @@
+<form [formGroup]="registerForm"  (ngSubmit)="HandleSubmit()">  
+  
+  <mat-stepper [linear]="isLinear" labelPosition="bottom" #stepper>
+ 
+    <mat-step [stepControl]="userform">
+      <div formGroupName="user" class="userinfo">
+        <ng-template matStepLabel>User Information</ng-template>
+        
+        <div class="column">
+            
+                <div>
+                    <div>
+                      <span><b>Email*</b></span>
+                    </div>
+                    <div>
+                      <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input formControlName="email" matInput placeholder="name@example.com" >
+                       
+                        
+                        
+                      </mat-form-field>
+                      <div *ngIf="registerForm.get('user.email')?.invalid && (registerForm.get('user.email')?.dirty || registerForm.get('user.email')?.touched || showError)">
+                        <div *ngIf="registerForm.get('user.email')?.hasError('required')" style="color: red;  ">Email is required</div>
+                        <div *ngIf="registerForm.get('user.email')?.hasError('pattern')" style="color: red; ">Invalid email format</div>
+                      </div>
+                      
+                      
+                    </div>
+                  </div>
+                  
+                <div class="col1" style="display: flex;">    
+                  
+                  <div style="width: 50%;">
+                    <div>
+                      <span><b>Contact Person Name*</b></span>
+                    </div>
+                    <div>
+                      <mat-form-field appearance="outline">
+                        <mat-label>Contact Person Name</mat-label>
+                        <input formControlName="contactPersonName" matInput placeholder="">
+                        
+                        
+                      </mat-form-field>
+                    </div>
+                    <div *ngIf="registerForm.get('user.contactPersonName')?.invalid && (registerForm.get('user.contactPersonName')?.dirty || registerForm.get('user.contactPersonName')?.touched || showError)">
+                      <div *ngIf="registerForm.get('user.contactPersonName')?.hasError('required')" style="color: red;">Contact Name is required</div>
+                      
+                    </div>
+                    </div>
+            
+    
+            
+            
+            
+    
+    
+      
+            
+                    <div style="width: 50%;">
+                    <div>
+                      <span><b>Contact Number*</b></span>
+                    </div>
+                    <div>
+                      <mat-form-field appearance="outline">
+                        <mat-label>Contact Number</mat-label>
+                        <input formControlName="contactNo" matInput placeholder="">
+                        
+                        
+                      </mat-form-field>
+                    </div>
+                    <div *ngIf="registerForm.get('user.contactNo')?.invalid && (registerForm.get('user.contactNo')?.dirty || registerForm.get('user.contactNo')?.touched || showError)">
+                      <div *ngIf="registerForm.get('user.contactNo')?.hasError('required')" style="color: red;">Contact Number is required</div>
+                      <div *ngIf="registerForm.get('user.contactNo')?.hasError('maxlength')" style="color: red;">Contact must be 10 characters</div>
+                      <div *ngIf="registerForm.get('user.contactNo')?.hasError('minlength')" style="color: red;">Contact must be 10 characters</div>
+                    </div>
+                  </div>
+          
+                  </div>
+          
+                    <div>
+                      <div>
+                        <span><b>Store Name*</b></span>
+                      </div>
+                      <div>
+                        <mat-form-field appearance="outline">
+                          <mat-label>Store Name</mat-label>
+                          <input formControlName="storeName" matInput placeholder="">
+                          
+                          
+                        </mat-form-field>
+                      </div>
+                      <div *ngIf="registerForm.get('user.storeName')?.invalid && (registerForm.get('user.storeName')?.dirty || registerForm.get('user.storeName')?.touched || showError)">
+                        <div *ngIf="registerForm.get('user.storeName')?.hasError('required')" style="color: red;">Store Name is required</div>
+                        
+                      </div>
+                    </div>
+    
+            
+
+        </div>
+          
+        
+        <div>
+          <button mat-raised-button color="primary" mat-button matStepperNext style="margin-top: 10px;" type="submit">Save and Next</button>
+        </div>
+      </div>
+    </mat-step>
+
+
+
+    <mat-step [stepControl]="address" >
+      <div formGroupName="address" class="address" style="margin-bottom: 50px;">
+        <ng-template matStepLabel>Address Information</ng-template>
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h2><b>Shipping Address</b></h2>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{panelOpenState ? 'open' : 'closed'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div formGroupName="shipping">
+
+        <div class="col-three" style="display: flex;">
+          <div class="col-four" style="width: 50%; padding-right: 20px;">
+              <p>
+                  <div>
+                      <b>Province Name*</b>
+                  </div>
+          
+                  
+                  <div class="input-group mb-3">
+                      
+                      <select  formControlName="shippingProvinceId" class="form-select" id="inputGroupSelect01" required>
+                        <!-- <option value="defaultValue" disabled selected>{{ defaultValue }}</option>
+                        <option *ngFor="let item of province" [value]="item.id" >{{ item.name }}</option> -->
+                        <option >Province No. 1</option>
+                        <option >Province No. 2</option>
+                        <option >Province No. 3</option>
+                        <option >Province No. 4</option>
+                        <option >Province No. 5</option>
+                        <option >Province No. 6</option>
+                        <option >Province No. 7</option>
+                        
+                        
+                      </select>
+                    </div>
+                    <div *ngIf="registerForm.get('address.shipping.shippingProvinceId')?.invalid && (registerForm.get('address.shipping.shippingProvinceId')?.dirty || registerForm.get('address.shipping.shippingProvinceId')?.touched || showError)">
+                      <div *ngIf="registerForm.get('address.shipping.shippingProvinceId')?.hasError('required')" style="color: red;">Province Name is required</div>
+                      
+                    </div>
+            </div>
+      
+      
+                <div class="col-five" style="width: 50%;">
+                  <div>
+                    <p>
+                      <div>
+                          <b>District Name*</b>
+                      </div>
+              
+                      
+                      <div class="input-group mb-3" id="district">
+                          
+                          <select formControlName="shippingDistrictId" class="form-select" id="inputGroupSelect02"  required>
+                            <!-- <option *ngFor="let item of district" [value]="item.id">{{ item.name }}</option> -->
+                            <option >Kathmandu</option>
+                            <option >Lalitpur</option>
+                            <option >Bhaktapur</option>
+                            <option >Manang</option>
+                            <option >Dolakha</option>
+                            <option >Janakpur</option>
+                            <option >Makwanpur</option>
+                            <option >Nuwakot</option>
+                            <option >Chitwan</option>
+                            <option >Sindhupalchok</option>
+                            <option >Mustang</option>
+                            <option >Kaski</option>
+                            <option >Sunsari</option>
+                            <option >Rolpa</option>
+                          </select>
+                        </div>
+          
+                </div>
+                <div *ngIf="registerForm.get('address.shipping.shippingDistrictId')?.invalid && (registerForm.get('address.shipping.shippingDistrictId')?.dirty || registerForm.get('address.shipping.shippingDistrictId')?.touched || showError)">
+                  <div *ngIf="registerForm.get('address.shipping.shippingDistrictId')?.hasError('required')" style="color: red;">District Name is required</div>
+                  
+                </div>
+
+                  </div>
+                  
+        </div>
+                
+  
+            <div>
+              <p>
+                  <div>
+                      <b>Area*</b>
+                  </div>
+          
+                  
+                  <div class="input-group mb-3">
+                      
+                      <select formControlName="shippingAreaId" class="form-select" id="inputGroupSelect03" required>
+                        <!-- <option *ngFor="let item of area" [value]="item.id">{{ item.name }}</option> -->
+
+                            <option >Kirtipur</option>
+                            <option >Lele</option>
+                            <option >Thimi</option>
+                            <option >Chame</option>
+                            <option >Bhimeshwar</option>
+                            <option >Jaleshwar</option>
+                            <option >Hetauda</option>
+                            <option >Bidur</option>
+                            <option >Bharatpur</option>
+                            <option >Chautara</option>
+                            <option >Jomsom</option>
+                            <option >Pokhara</option>
+                            <option >Inaruwa</option>
+                            <option >Liwang</option>
+                        
+                      </select>
+                  </div>
+            </div>
+            <div *ngIf="registerForm.get('address.shipping.shippingAreaId')?.invalid && (registerForm.get('address.shipping.shippingAreaId')?.dirty || registerForm.get('address.shipping.shippingAreaId')?.touched || showError)">
+              <div *ngIf="registerForm.get('address.shipping.shippingAreaId')?.hasError('required')" style="color: red;">Area Name is required</div>
+              
+            </div>
+  
+  
+                 <div class="street">
+                  <div class="street-one">
+                      <div class="row g-3 needs-validation" novalidate>
+                          <div class="col-md-4">
+                              <div>
+                                  <label for="validationCustom01" class="form-label"><b>Street 1*</b> </label>
+                              </div>
+                              <div class="street-name">
+                                  <input formControlName="shippingStreet1" type="text" class="form-control" id="validationCustom01" placeholder="Street name ..."   required>
+                              </div>
+                            
+                            
+                          </div>
+                        </div>
+                        <div *ngIf="registerForm.get('address.shipping.shippingStreet1')?.invalid && (registerForm.get('address.shipping.shippingStreet1')?.dirty || registerForm.get('address.shipping.shippingStreet1')?.touched || showError)">
+                          <div *ngIf="registerForm.get('address.shipping.shippingStreet1')?.hasError('required')" style="color: red;">Street 1 Name is required</div>
+                          
+                        </div>
+                  </div>
+                  <div class="street-two">
+                      <div class="row g-3 needs-validation" novalidate >
+                          <div class="col-md-4">
+                              <div>
+                                  <label for="validationCustom02" class="form-label">Street 2(optional) </label>
+                              </div>
+                              <div class="street-name">
+                                  <input 
+                                  formControlName="shippingStreet2" 
+                                  type="text" class="form-control"  placeholder="Street name ..." >
+                              </div>
+                            
+                            
+                          </div>
+                        </div>
+  
+  
+                  </div>
+  
+  
+                 </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+                <div>
+                        <section class="example-section" style="padding-top: 10px; margin-top: 50px;">
+                            <mat-checkbox class="example-margin"   formControlName="useShippingAddress"  (change)="copyShippingAddressToBillingAddress($event)">Billing Address same as Shipping Address.</mat-checkbox>
+                            
+                        </section>
+                </div>
+
+
+                <div class="billing" formGroupName="billing" style="margin-top: 50px;">
+                <mat-accordion>
+                  <mat-expansion-panel (opened)="panelOpenState1 = true"
+                                 (closed)="panelOpenState1 = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h2><b>Billing Address</b></h2>
+                </mat-panel-title>
+                <mat-panel-description>
+                  {{panelOpenState1 ? 'open' : 'closed'}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+
+                
+                    
+                    <div class="col-three" style="display: flex;">
+                      <div class="col-four" style="width: 50%; padding-right: 20px;">
+                        <div >
+                          <p>
+                              <div>
+                                  <b>Province Name*</b>
+                              </div>
+                      
+                              
+                              <div class="input-group mb-3">
+                                  
+                                  <select formControlName="shippingProvinceId" class="form-select" id="inputGroupSelect01" required>
+                                    <!-- <option *ngFor="let item of province" [value]="item.id">{{ item.name }}</option> -->
+                                    <option >Province No. 1</option>
+                                    <option >Province No. 2</option>
+                                    <option >Province No. 3</option>
+                                    <option >Province No. 4</option>
+                                    <option >Province No. 5</option>
+                                    <option >Province No. 6</option>
+                                    <option >Province No. 7</option>
+                                    
+                                    
+                                  </select>
+                                </div>
+                        </div>
+                        <div *ngIf="registerForm.get('address.billing.shippingProvinceId')?.invalid && (registerForm.get('address.billing.shippingProvinceId')?.dirty || registerForm.get('address.billing.shippingProvinceId')?.touched || showError)">
+                          <div *ngIf="registerForm.get('address.billing.shippingProvinceId')?.hasError('required')" style="color: red;">Province Name is required</div>
+                          
+                        </div>
+
+                      </div>
+                      
+                  
+                  
+                            <div class="col-five" style="width: 50%;">
+                              <div>
+                                <p>
+                                  <div>
+                                      <b>District Name*</b>
+                                  </div>
+                          
+                                  
+                                  <div class="input-group mb-3" id="district">
+                                      
+                                      <select formControlName="shippingDistrictId" class="form-select" id="inputGroupSelect02"  required>
+                                        <!-- <option *ngFor="let item of district" [value]="item.id">{{ item.name }}</option> -->
+                                        <option >Kathmandu</option>
+                                        <option >Lalitpur</option>
+                                        <option >Bhaktapur</option>
+                                        <option >Manang</option>
+                                        <option >Dolakha</option>
+                                        <option >Janakpur</option>
+                                        <option >Makwanpur</option>
+                                        <option >Nuwakot</option>
+                                        <option >Chitwan</option>
+                                        <option >Sindhupalchok</option>
+                                        <option >Mustang</option>
+                                        <option >Kaski</option>
+                                        <option >Sunsari</option>
+                                        <option >Rolpa</option>
+                                        
+                                      </select>
+                                    </div>
+                      
+                            </div>
+                            <div *ngIf="registerForm.get('address.billing.shippingDistrictId')?.invalid && (registerForm.get('address.billing.shippingDistrictId')?.dirty || registerForm.get('address.billing.shippingDistrictId')?.touched || showError)">
+                              <div *ngIf="registerForm.get('address.billing.shippingDistrictId')?.hasError('required')" style="color: red;">District Name is required</div>
+                              
+                            </div>
+
+                              </div>
+                              
+                    </div>
+                            
+              
+                        <div>
+                          <p>
+                              <div>
+                                  <b>Area*</b>
+                              </div>
+                      
+                              
+                              <div class="input-group mb-3">
+                                  
+                                  <select formControlName="shippingAreaId" class="form-select" id="inputGroupSelect03" required>
+                                    <!-- <option *ngFor="let item of area" [value]="item.id" || >{{ item.name }}</option> -->
+                                    <option >Kirtipur</option>
+                                    <option >Lele</option>
+                                    <option >Thimi</option>
+                                    <option >Chame</option>
+                                    <option >Bhimeshwar</option>
+                                    <option >Jaleshwar</option>
+                                    <option >Hetauda</option>
+                                    <option >Bidur</option>
+                                    <option >Bharatpur</option>
+                                    <option >Chautara</option>
+                                    <option >Jomsom</option>
+                                    <option >Pokhara</option>
+                                    <option >Inaruwa</option>
+                                    <option >Liwang</option>
+                                            
+                                  </select>
+                              </div>
+                        </div>
+                        <div *ngIf="registerForm.get('address.billing.shippingAreaId')?.invalid && (registerForm.get('address.billing.shippingAreaId')?.dirty || registerForm.get('address.billing.shippingAreaId')?.touched || showError)">
+                          <div *ngIf="registerForm.get('address.billing.shippingAreaId')?.hasError('required')" style="color: red;">Area Name is required</div>
+                          
+                        </div>
+              
+              
+                             <div class="street">
+                              <div class="street-one">
+                                  <div class="row g-3 needs-validation" novalidate>
+                                      <div class="col-md-4">
+                                          <div>
+                                              <label for="validationCustom01" class="form-label"><b>Street 1*</b> </label>
+                                          </div>
+                                          <div class="street-name">
+                                              <input formControlName="shippingStreet1" type="text" class="form-control" id="validationCustom01" placeholder="Street name ..."   required>
+                                          </div>
+                                        
+                                        
+                                      </div>
+                                    </div>
+                                    <div *ngIf="registerForm.get('address.billing.shippingStreet1')?.invalid && (registerForm.get('address.billing.shippingStreet1')?.dirty || registerForm.get('address.billing.shippingStreet1')?.touched || showError)">
+                                      <div *ngIf="registerForm.get('address.billing.shippingStreet1')?.hasError('required')" style="color: red;">Street 1 Name is required</div>
+                                      
+                                    </div>
+                              </div>
+                              <div class="street-two">
+                                  <div class="row g-3 needs-validation" novalidate >
+                                      <div class="col-md-4">
+                                          <div>
+                                              <label for="validationCustom02" class="form-label"><b>Street 2</b>(optional) </label>
+                                          </div>
+                                          <div class="street-name">
+                                              <input 
+                                              formControlName="shippingStreet2" 
+                                              type="text" class="form-control"  placeholder="Street name ..." >
+                                          </div>
+                                        
+                                        
+                                      </div>
+                                    </div>
+              
+              
+                              </div>
+              
+              
+                             </div>
+
+
+                            </mat-expansion-panel>
+                          </mat-accordion>
+                             
+
+                    
+                </div>
+
+                        
+                  
+          
+      
+    
+        <div style="display: flex; gap:10px; margin-top: 20px;">
+          <button class="back" style="padding-left: 10px;" mat-raised-button color="primary" mat-button matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" mat-button matStepperNext > Save and Next</button>
+        </div>
+      </div>
+    </mat-step>
+
+
+    <div class="bankdetails" >
+        
+        <mat-step [stepControl]="bankform">
+            <div formGroupName="bank" style="margin: auto; width: 80%;">
+              <ng-template matStepLabel>Bank Details</ng-template>
+              <h2><b>ID</b> </h2>
+              <div class="example-container1">
+                
+                  <div>
+                      <b>Citizenship Number*</b>
+                  </div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Citizenship no.</mat-label>
+                    <input formControlName="citizenshipId" matInput placeholder=""  required >
+                    
+                  </mat-form-field>
+                  <div *ngIf="registerForm.get('bank.citizenshipId')?.invalid && (registerForm.get('bank.citizenshipId')?.dirty || registerForm.get('bank.citizenshipId')?.touched || showError)">
+                    <div *ngIf="registerForm.get('bank.citizenshipId')?.hasError('required')" style="color: red;">Citizenship Number is required</div>
+                    
+                  </div>
+              </div>
+      
+              <div class="businessreg" style="display: flex; margin-top: 10px;">
+                <div class="example-container2" style="width: 50%;">
+                  <div>
+                      <b>Business Registered Name*</b>
+                  </div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Business reg name</mat-label>
+                    <input formControlName="businessRegisteredName" matInput placeholder=""  required >
+                    
+                  </mat-form-field>
+                  <div *ngIf="registerForm.get('bank.businessRegisteredName')?.invalid && (registerForm.get('bank.businessRegisteredName')?.dirty || registerForm.get('bank.businessRegisteredName')?.touched || showError)">
+                    <div *ngIf="registerForm.get('bank.businessRegisteredName')?.hasError('required')" style="color: red;">Name is required</div>
+                    
+                  </div>
+                </div>
+
+                <div class="example-container3" style="width: 50%;">
+                  <div>
+                      <b>Business Registered Number*</b>
+                  </div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Business reg no.</mat-label>
+                    <input formControlName="businessRegisteredNo" matInput placeholder=""  required >
+                    
+                  </mat-form-field>
+                  <div *ngIf="registerForm.get('bank.businessRegisteredNo')?.invalid && (registerForm.get('bank.businessRegisteredNo')?.dirty || registerForm.get('bank.businessRegisteredNo')?.touched || showError)">
+                    <div *ngIf="registerForm.get('bank.businessRegisteredNo')?.hasError('required')" style="color: red;">Number is required</div>
+                    
+                  </div>
+                </div>
+              </div>
+      
+                <div class="example-container4" style="margin-top: 10px;">
+                  <div>
+                      <b>PAN Number*</b>
+                  </div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>PAN no.</mat-label>
+                    <input formControlName="panVatNo" matInput placeholder=""  required >
+                    
+                  </mat-form-field>
+                  <div *ngIf="registerForm.get('bank.panVatNo')?.invalid && (registerForm.get('bank.panVatNo')?.dirty || registerForm.get('bank.panVatNo')?.touched || showError)">
+                    <div *ngIf="registerForm.get('bank.panVatNo')?.hasError('required')" style="color: red;">Number is required</div>
+                    
+                  </div>
+                </div>
+
+                <h2 style="margin-top: 10px;">
+                  <b>Images</b>
+                </h2>
+      
+                <div style="display: flex;">
+                  <div style="width: 50%; ">
+                    <b >Citizenship Image*</b>
+                    <div class="row" style="padding-top: 10px;">
+                      <img *ngFor='let url of urls' [src]="url" style="width: 100px; height: 100px; margin-top: 10px;">
+                      <input formControlName="citizenship" type="file" (change)="selectFiles($event)" multiple >
+                    </div>
+                    <div *ngIf="registerForm.get('bank.citizenship')?.invalid && (registerForm.get('bank.citizenship')?.dirty || registerForm.get('bank.citizenship')?.touched || showError)">
+                      <div *ngIf="registerForm.get('bank.citizenship')?.hasError('required')" style="color: red;">Citizenship Images required</div>
+                      
+                    </div>
+                  </div>
+  
+                    <div style="margin-top: 15px; width: 50%;  ">
+                      <b >PAN Image*</b>
+                      <div class="row" style="padding-top: 10px;">
+                        <img *ngFor='let img of imgs' [src]="img" style="width: 100px; height: 100px; margin-top: 10px;">
+                        <input formControlName="panVat" type="file" (change)="selectImgs($event)" multiple >
+                      </div>
+                      <div *ngIf="registerForm.get('bank.panVat')?.invalid && (registerForm.get('bank.panVat')?.dirty || registerForm.get('bank.panVat')?.touched || showError)">
+                        <div *ngIf="registerForm.get('bank.panVat')?.hasError('required')" style="color: red;">PAN/VAT Images required</div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                    
+                      
+                    
+      
+                
+                <h2 style="margin-top: 30px;"><b>Bank</b> </h2>
+                <div class="bank" >
+                    
+                    <div class="accountdetails" style="display: flex;">
+                      <div class="example-container5" style="width: 50%;">
+                        <div>
+                            <b>Account Name*</b>
+                        </div>
+                        <mat-form-field appearance="outline">
+                          <mat-label>Account name</mat-label>
+                          <input formControlName="accountName" matInput placeholder=""  required >
+                          
+                        </mat-form-field>
+                        <div *ngIf="registerForm.get('bank.accountName')?.invalid && (registerForm.get('bank.accountName')?.dirty || registerForm.get('bank.accountName')?.touched || showError)">
+                          <div *ngIf="registerForm.get('bank.accountName')?.hasError('required')" style="color: red;">Account Name is required</div>
+                          
+                        </div>
+                    </div>
+
+                    <div class="example-container6" style="width: 50%; ">
+                        <div>
+                            <b>Account Number*</b>
+                        </div>
+                        <mat-form-field appearance="outline">
+                          <mat-label>Account no.</mat-label>
+                          <input formControlName="bankAccountNo" matInput placeholder=""  required >
+                          
+                        </mat-form-field>
+                        <div *ngIf="registerForm.get('bank.bankAccountNo')?.invalid && (registerForm.get('bank.bankAccountNo')?.dirty || registerForm.get('bank.bankAccountNo')?.touched || showError)">
+                          <div *ngIf="registerForm.get('bank.bankAccountNo')?.hasError('required')" style="color: red;">Account Number is required</div>
+                          
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="example-container7" style="margin-top: 10px;">
+                        <div>
+                            <b>Bank Name*</b>
+                        </div>
+                        <mat-form-field appearance="outline" >
+                          <mat-label>Bank name</mat-label>
+                          <input formControlName="bankName" matInput placeholder=""  required >
+                          
+                        </mat-form-field>
+                        <div *ngIf="registerForm.get('bank.bankName')?.invalid && (registerForm.get('bank.bankName')?.dirty || registerForm.get('bank.bankName')?.touched || showError)">
+                          <div *ngIf="registerForm.get('bank.bankName')?.hasError('required')" style="color: red;">Bank Name is required</div>
+                          
+                        </div>
+                    </div>
+
+
+                    <div style="padding-top: 10px;">
+                      <b >Upload Bank Cheque Image*</b>
+                      <div class="row" style="padding-top: 10px;">
+                        <img *ngFor='let image of images' [src]="image" style="width: 100px; height: 100px;">
+                        <input formControlName="bankChequeImage" type="file" (change)="selectImages($event)" multiple >
+                      </div>
+                      <div *ngIf="registerForm.get('bank.bankChequeImage')?.invalid && (registerForm.get('bank.bankChequeImage')?.dirty || registerForm.get('bank.bankChequeImage')?.touched || showError)">
+                        <div *ngIf="registerForm.get('bank.bankChequeImage')?.hasError('required')" style="color: red;">Bank Cheque Images required</div>
+                        
+                      </div>
+                    </div>
+                </div>
+      
+      
+      
+      
+              
+                
+             
+      
+      
+                  
+              <div style="display: flex; gap:10px; margin-top: 20px;">
+                  <button class="back" style="padding-left: 10px;" mat-raised-button color="primary" mat-button matStepperPrevious>Back</button>
+                  <button mat-raised-button color="primary" mat-button matStepperNext>Save</button>
+              </div>
+              
+            </div>
+          </mat-step>
+    </div>
+
+    
+  
+  </mat-stepper>
+</form>  
+   

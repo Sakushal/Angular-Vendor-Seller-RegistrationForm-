@@ -1,0 +1,68 @@
+.mat-mdc-form-field {
+    margin-top: 16px;
+  }
+  
+  mat-form-field{
+    width: 500px;
+  }
+  
+  /* address */
+  .mat-mdc-form-field + .mat-mdc-form-field {
+    margin-left: 8px;
+  }
+  mat-step .back{
+    padding-right: 10px;
+  }
+
+  .example-container mat-form-field + mat-form-field {
+    margin-left: 8px;
+  }
+  /* .column{
+    display: flex;
+    
+  } */
+  .userinfo{
+    margin: auto;
+    width: 80%;
+  }
+  /* .column .col-one{
+    padding-right: 50px;
+  }
+
+.input-group{
+    width: 50%;
+  }
+.col-three{
+    
+    display: flex;
+}
+
+.col-four {
+    width: 70%;
+} 
+.col-five{
+    width: 70%;
+} */
+.address{
+    margin: auto;
+    width: 80%;
+  }
+  .street{
+    display: flex;
+  }
+  .street-one{
+    width: 70%;
+  }
+  .street-two{
+    width: 70%;
+  }
+  .street-two .street-name{
+    width: 160%;
+  }
+  .street-one .street-name{
+    width: 160%;
+  }
+
+ 
+  
+
