@@ -310,7 +310,7 @@
                               
                               <div class="input-group mb-3">
                                   
-                                  <select formControlName="shippingProvinceId" class="form-select" id="inputGroupSelect01" required>
+                                  <select formControlName="billingProvinceId" class="form-select" id="inputGroupSelect01" required>
                                     <!-- <option *ngFor="let item of province" [value]="item.id">{{ item.name }}</option> -->
                                     <option >Province No. 1</option>
                                     <option >Province No. 2</option>
@@ -324,8 +324,8 @@
                                   </select>
                                 </div>
                         </div>
-                        <div *ngIf="registerForm.get('address.billing.shippingProvinceId')?.invalid && (registerForm.get('address.billing.shippingProvinceId')?.dirty || registerForm.get('address.billing.shippingProvinceId')?.touched || showError)">
-                          <div *ngIf="registerForm.get('address.billing.shippingProvinceId')?.hasError('required')" style="color: red;">Province Name is required</div>
+                        <div *ngIf="registerForm.get('address.billing.billingProvinceId')?.invalid && (registerForm.get('address.billing.billingProvinceId')?.dirty || registerForm.get('address.billing.billingProvinceId')?.touched || showError)">
+                          <div *ngIf="registerForm.get('address.billing.billingProvinceId')?.hasError('required')" style="color: red;">Province Name is required</div>
                           
                         </div>
 
@@ -343,7 +343,7 @@
                                   
                                   <div class="input-group mb-3" id="district">
                                       
-                                      <select formControlName="shippingDistrictId" class="form-select" id="inputGroupSelect02"  required>
+                                      <select formControlName="billingDistrictId" class="form-select" id="inputGroupSelect02"  required>
                                         <!-- <option *ngFor="let item of district" [value]="item.id">{{ item.name }}</option> -->
                                         <option >Kathmandu</option>
                                         <option >Lalitpur</option>
@@ -364,8 +364,8 @@
                                     </div>
                       
                             </div>
-                            <div *ngIf="registerForm.get('address.billing.shippingDistrictId')?.invalid && (registerForm.get('address.billing.shippingDistrictId')?.dirty || registerForm.get('address.billing.shippingDistrictId')?.touched || showError)">
-                              <div *ngIf="registerForm.get('address.billing.shippingDistrictId')?.hasError('required')" style="color: red;">District Name is required</div>
+                            <div *ngIf="registerForm.get('address.billing.billingDistrictId')?.invalid && (registerForm.get('address.billing.billingDistrictId')?.dirty || registerForm.get('address.billing.billingDistrictId')?.touched || showError)">
+                              <div *ngIf="registerForm.get('address.billing.billingDistrictId')?.hasError('required')" style="color: red;">District Name is required</div>
                               
                             </div>
 
@@ -383,7 +383,7 @@
                               
                               <div class="input-group mb-3">
                                   
-                                  <select formControlName="shippingAreaId" class="form-select" id="inputGroupSelect03" required>
+                                  <select formControlName="billingAreaId" class="form-select" id="inputGroupSelect03" required>
                                     <!-- <option *ngFor="let item of area" [value]="item.id" || >{{ item.name }}</option> -->
                                     <option >Kirtipur</option>
                                     <option >Lele</option>
@@ -403,8 +403,8 @@
                                   </select>
                               </div>
                         </div>
-                        <div *ngIf="registerForm.get('address.billing.shippingAreaId')?.invalid && (registerForm.get('address.billing.shippingAreaId')?.dirty || registerForm.get('address.billing.shippingAreaId')?.touched || showError)">
-                          <div *ngIf="registerForm.get('address.billing.shippingAreaId')?.hasError('required')" style="color: red;">Area Name is required</div>
+                        <div *ngIf="registerForm.get('address.billing.billingAreaId')?.invalid && (registerForm.get('address.billing.billingAreaId')?.dirty || registerForm.get('address.billing.billingAreaId')?.touched || showError)">
+                          <div *ngIf="registerForm.get('address.billing.billingAreaId')?.hasError('required')" style="color: red;">Area Name is required</div>
                           
                         </div>
               
@@ -417,14 +417,14 @@
                                               <label for="validationCustom01" class="form-label"><b>Street 1*</b> </label>
                                           </div>
                                           <div class="street-name">
-                                              <input formControlName="shippingStreet1" type="text" class="form-control" id="validationCustom01" placeholder="Street name ..."   required>
+                                              <input formControlName="billingStreet1" type="text" class="form-control" id="validationCustom01" placeholder="Street name ..."   required>
                                           </div>
                                         
                                         
                                       </div>
                                     </div>
-                                    <div *ngIf="registerForm.get('address.billing.shippingStreet1')?.invalid && (registerForm.get('address.billing.shippingStreet1')?.dirty || registerForm.get('address.billing.shippingStreet1')?.touched || showError)">
-                                      <div *ngIf="registerForm.get('address.billing.shippingStreet1')?.hasError('required')" style="color: red;">Street 1 Name is required</div>
+                                    <div *ngIf="registerForm.get('address.billing.billingStreet1')?.invalid && (registerForm.get('address.billing.billingStreet1')?.dirty || registerForm.get('address.billing.billingStreet1')?.touched || showError)">
+                                      <div *ngIf="registerForm.get('address.billing.billingStreet1')?.hasError('required')" style="color: red;">Street 1 Name is required</div>
                                       
                                     </div>
                               </div>
@@ -436,7 +436,7 @@
                                           </div>
                                           <div class="street-name">
                                               <input 
-                                              formControlName="shippingStreet2" 
+                                              formControlName="billingStreet2" 
                                               type="text" class="form-control"  placeholder="Street name ..." >
                                           </div>
                                         

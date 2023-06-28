@@ -16,7 +16,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {ThemePalette} from '@angular/material/core';
 
 import {NgFor} from '@angular/common';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ImageUploadService} from '../services/image-upload.service';
@@ -57,15 +57,15 @@ export class RegisterFormComponent implements OnInit{
   preview = '';
  
 
-  imageInfos?: Observable<any>;
+ 
 
   panelOpenState = false;
   panelOpenState1 = false;
   ApiService: any;
 
-  province: any[] | undefined;
-  district: any[] | undefined;
-  area: any[] | undefined;
+  province: any[] = [];
+  district: any[] = [];
+  area: any[] = [];
   
 
 
@@ -100,19 +100,20 @@ export class RegisterFormComponent implements OnInit{
       }),
       address:this.formBuilder.group({
         shipping: this.formBuilder.group({
-        shippingProvinceId: this.formBuilder.control('',Validators.required),
-        shippingDistrictId: this.formBuilder.control('',Validators.required),
-        shippingAreaId: this.formBuilder.control('',Validators.required),
-        shippingStreet1: this.formBuilder.control('',Validators.required),
-        shippingStreet2: this.formBuilder.control(''),
-        }),
-        useShippingAddress: false,
-        billing: this.formBuilder.group({
-        shippingProvinceId: this.formBuilder.control('',Validators.required),
-        shippingDistrictId: this.formBuilder.control('',Validators.required),
-        shippingAreaId: this.formBuilder.control('',Validators.required),
-        shippingStreet1: this.formBuilder.control('',Validators.required),
-        shippingStreet2: this.formBuilder.control(''),
+          shippingProvinceId: ['',Validators.required],
+          shippingDistrictId: ['',Validators.required],
+          shippingAreaId: ['',Validators.required],
+          shippingStreet1: ['',Validators.required],
+          shippingStreet2: [''],
+          }),
+          useShippingAddress: false,
+          billing: this.formBuilder.group({
+          billingProvinceId: ['',Validators.required],
+          billingDistrictId: ['',Validators.required],
+          billingAreaId: ['',Validators.required],
+          billingStreet1: ['',Validators.required],
+          billingStreet2: [''],
+       
         })
       }),
       bank:this.formBuilder.group({
@@ -146,14 +147,44 @@ export class RegisterFormComponent implements OnInit{
 
 
    //shipping address same as billing address
-   copyShippingAddressToBillingAddress(event: any) {
-    if (event.target.checked) {
+  //  copyShippingAddressToBillingAddress(event: MatCheckboxChange) {
+  //   if (event.checked) {
+  //     const shipping = this.registerForm.get('address.shipping')?.value;
+  //     this.registerForm.get('address.billing')?.patchValue(shipping);
+  //   } else {
+  //     this.registerForm.get('address.billing')?.reset();
+  //   }
+  // }
+  
+
+  copyShippingAddressToBillingAddress(event:MatCheckboxChange): void {
+    if (event.checked) {
       const shipping = this.registerForm.get('address.shipping')?.value;
-      this.registerForm.get('address.billing')?.patchValue(shipping);
+      console.log(shipping);
+      const billing = this.registerForm.get('address.billing');
+      console.log(billing);
+      
+      // Patch each individual control in the billing form group
+      if (shipping && billing) {
+        billing.get('billingProvinceId')?.setValue(shipping.shippingProvinceId);
+        billing.get('billingDistrictId')?.setValue(shipping.shippingDistrictId);
+        billing.get('billingAreaId')?.setValue(shipping.shippingAreaId);
+        billing.get('billingStreet1')?.setValue(shipping.shippingStreet1);
+        billing.get('billingStreet2')?.setValue(shipping.shippingStreet2);
+      
+
+
+        console.log(billing)
+      }
+      
+
     } else {
+      
       this.registerForm.get('address.billing')?.reset();
     }
   }
+  
+  
   
   
     
