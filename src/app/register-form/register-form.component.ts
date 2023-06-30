@@ -19,7 +19,7 @@ import {NgFor} from '@angular/common';
 import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ImageUploadService} from '../services/image-upload.service';
+
 import { ApiService} from '../services/api.service';
 
 import {PersonalInfo} from '../personalInfo.model';
@@ -27,19 +27,9 @@ import {PersonalInfo} from '../personalInfo.model';
 import { IdentityDetails} from '../identityDetails.model';
 import { BankDetails} from '../bankDetails.model';
 
-
-
-
-
-
-
-export interface Task {
-  name: string;
-  completed: boolean;
-  color: ThemePalette;
-  subtasks?: Task[];
-}
-
+import * as CryptoJS from 'crypto-js';
+import { EncryptedValue } from '../encryptedValue.model';
+import { AES } from 'crypto-js';
 
 
 @Component({
@@ -79,10 +69,16 @@ export class RegisterFormComponent implements OnInit{
   registerForm!:FormGroup;
   isLinear = false;
   showError: boolean = false;
-  
+
+  fileName = '';
+  file2Name = '';
+  file3Name = '';
+
+
+ 
   
 
-  constructor(private formBuilder:FormBuilder, private imageUpload:ImageUploadService, private http:HttpClient, private apiService:ApiService){
+  constructor(private formBuilder:FormBuilder, private http:HttpClient, private apiService:ApiService){
     
 
   
@@ -134,29 +130,11 @@ export class RegisterFormComponent implements OnInit{
       }),
     })
 
-
-
-    
-
-   
-   
-
     this.fetchData();
    
   }
 
-
-   //shipping address same as billing address
-  //  copyShippingAddressToBillingAddress(event: MatCheckboxChange) {
-  //   if (event.checked) {
-  //     const shipping = this.registerForm.get('address.shipping')?.value;
-  //     this.registerForm.get('address.billing')?.patchValue(shipping);
-  //   } else {
-  //     this.registerForm.get('address.billing')?.reset();
-  //   }
-  // }
-  
-
+   // Patch each individual control in the billing form group
   copyShippingAddressToBillingAddress(event:MatCheckboxChange): void {
     if (event.checked) {
       const shipping = this.registerForm.get('address.shipping')?.value;
@@ -164,7 +142,7 @@ export class RegisterFormComponent implements OnInit{
       const billing = this.registerForm.get('address.billing');
       console.log(billing);
       
-      // Patch each individual control in the billing form group
+   
       if (shipping && billing) {
         billing.get('billingProvinceId')?.setValue(shipping.shippingProvinceId);
         billing.get('billingDistrictId')?.setValue(shipping.shippingDistrictId);
@@ -185,99 +163,148 @@ export class RegisterFormComponent implements OnInit{
   }
   
   
-  
-  
-    
-
-  
-
-
-
 // Form Image upload
 
-  // 
-  
-
   urls:string[]=[];
+  encryptedUrls: string[] = [];
+  decryptedUrls: string[] = [];
   
 
   selectFiles(event:any){
-    if (event.target.files){
-      for(let i=0; i<2; i++){
+    const file:File = event.target.files[0];
+
+    if (file) {
+
+        this.fileName = file.name;
+
+        const formData = new FormData();
+
+        formData.append("thumbnail", file);
+
+        const upload$ = this.http.post("/api/thumbnail-upload", formData);
+
+        upload$.subscribe();
+    }
+    if (event && event.target && event.target.files) {     
+      console.log(event.target.files); // Check if files are present in the console 
+      for(let i=0; i<event.target.files.length; i++){
         var reader = new FileReader();
         reader.readAsDataURL(event.target.files[i]);
         reader.onload=(event: any)=>{
-          this.urls.push(event.target.result);
+
+          const dataUrlString = event.target.result.toString(); // Convert data URL to string          
+          // Encrypt the dataUrlString using AES
+          const secretKey = 'ABCDEabcde012345'; // Replace with your secret key
+          const encryptedUrl = AES.encrypt(dataUrlString, secretKey).toString();
+
+
+          this.urls.push(dataUrlString);
+          this.encryptedUrls.push(encryptedUrl);
+
+
+          console.log(dataUrlString);
+          console.log('Encrypted Url:'+ encryptedUrl);
+          
+         
         };
       }
     }
   }
 
   imgs:string[]=[];
+  encryptedimgs: string[] = [];
+  decryptedimgs: string[] = [];
 
   selectImgs(event:any){
-    if (event.target.files){
-      for(let i=0; i<2; i++){
+    const file:File = event.target.files[0];
+
+    if (file) {
+
+        this.file2Name = file.name;
+
+        const formData = new FormData();
+
+        formData.append("thumbnail", file);
+
+        const upload$ = this.http.post("/api/thumbnail-upload", formData);
+
+        upload$.subscribe();
+    }
+    if (event && event.target && event.target.files) {  
+      console.log(event.target.files); // Check if files are present in the console 
+   
+      for(let i=0; i<event.target.files.length; i++){
         var reader = new FileReader();
         reader.readAsDataURL(event.target.files[i]);
         reader.onload=(event: any)=>{
-          this.imgs.push(event.target.result);
+          
+          const dataimgString = event.target.result.toString(); // Convert data URL to string          
+           // Encrypt the dataUrlString using AES
+           const secretKey = 'ABCDEabcde012345'; // Replace with your secret key
+           const encryptedimg = AES.encrypt(dataimgString, secretKey).toString();
+          
+           this.imgs.push(dataimgString);
+           this.encryptedimgs.push(encryptedimg);
+
+
+          console.log(dataimgString);
+          console.log('Encrypted img:'+ encryptedimg);
+         
+          
         };
       }
     }
   }
 
-  images:{src:string}[]=[];
+
+
+  images:string[]=[];
+  encryptedimages: string[] = [];
+  decryptedimages: string[] = [];
 
   selectImages(event:any){
-    if (event.target.files){
-      for(let i=0; i<2; i++){
+    const file:File = event.target.files[0];
+
+    if (file) {
+
+        this.file3Name = file.name;
+
+        const formData = new FormData();
+
+        formData.append("thumbnail", file);
+
+        const upload$ = this.http.post("/api/thumbnail-upload", formData);
+
+        upload$.subscribe();
+    }
+    if (event && event.target && event.target.files) {     
+      console.log(event.target.files); // Check if files are present in the console 
+
+
+      for(let i=0; i<event.target.files.length; i++){
         var reader = new FileReader();
         reader.readAsDataURL(event.target.files[i]);
         reader.onload=(event: any)=>{
-          this.images.push(event.target.result);
+          const dataimageString = event.target.result.toString(); // Convert data URL to string          
+           // Encrypt the dataUrlString using AES
+          const secretKey = 'ABCDEabcde012345'; // Replace with your secret key
+          const encryptedimage = AES.encrypt(dataimageString, secretKey).toString();
+
+
+          this.images.push(dataimageString);
+          this.encryptedimages.push(encryptedimage);
+
+
+          console.log(dataimageString);
+          console.log('Encrypted image:'+ encryptedimage);
+        
         };
         
       }
     }
   }
 
- 
 
-
-
-
-
-
-
-  // post the form details in API
- 
-  // onSubmit() {
-  //   const formValues = this.firstFormGroup.value;
-  //   this.apiService.postFormData(formValues).subscribe({
-  //     next: (response: any) => {
-  //       console.log('Form data saved successfully!', response);
-  //       this.firstFormGroup.reset();
-  //     },
-  //     error: (error: any) => {
-  //       console.error('Error occurred while saving form data:', error);
-  //     }
-  //   });
-  // }
-
-  // onSubmitnextpage() {
-  //   const formValues = this.secondFormGroup.value;
-  //   this.apiService.postFormData(formValues).subscribe({
-  //     next: (response: any) => {
-  //       console.log('Form data saved successfully!', response);
-  //       this.secondFormGroup.reset();
-  //     },
-  //     error: (error: any) => {
-  //       console.error('Error occurred while saving form data:', error);
-  //     }
-  //   });
-  // }
- 
 
 
   //step control
@@ -331,6 +358,8 @@ export class RegisterFormComponent implements OnInit{
       });
   }
  
+
+
 
 
 

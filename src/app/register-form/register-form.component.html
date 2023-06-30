@@ -49,14 +49,9 @@
                     </div>
                     </div>
             
-    
-            
-            
-            
-    
-    
-      
-            
+
+
+
                     <div style="width: 50%;">
                     <div>
                       <span><b>Contact Number*</b></span>
@@ -474,7 +469,7 @@
     <div class="bankdetails" >
         
         <mat-step [stepControl]="bankform">
-            <div formGroupName="bank" style="margin: auto; width: 80%;">
+            <div class="bank" formGroupName="bank" style="margin: auto; width: 80%;">
               <ng-template matStepLabel>Bank Details</ng-template>
               <h2><b>ID</b> </h2>
               <div class="example-container1">
@@ -547,10 +542,32 @@
                 <div style="display: flex;">
                   <div style="width: 50%; ">
                     <b >Citizenship Image*</b>
-                    <div class="row" style="padding-top: 10px;">
-                      <img *ngFor='let url of urls' [src]="url" style="width: 100px; height: 100px; margin-top: 10px;">
-                      <input formControlName="citizenship" type="file" (change)="selectFiles($event)" multiple >
+                   <div class="dropzone" style=" height: 200px;
+                   display: table;
+                   width: 80%;
+                   background-color: #eee;
+                   border: dotted 1px #aaa;">
+                    <div class="text-wrapper" style="display: table-cell;
+                    vertical-align: middle;">
+                      <div class="row" style="font-family: sans-serif;
+                      font-size: 1.3em;
+                      text-align:center;">
+                        <img *ngFor='let url of urls' [src]="url" style="width: 150px; height: 100px; ">
+                        <input #fileUpload  class="file-input" formControlName="citizenship" type="file" (change)="selectFiles($event)" multiple style="display: none;">
+  
+                        <div class="file-upload">
+  
+                          
+                       
+                           <button mat-mini-fab color="primary" class="upload-btn"
+                             (click)="fileUpload.click()">
+                               <mat-icon>camera_alt</mat-icon>
+                           </button>
+                           {{fileName || "No file uploaded yet."}}
+                       </div>
+                      </div>
                     </div>
+                   </div>
                     <div *ngIf="registerForm.get('bank.citizenship')?.invalid && (registerForm.get('bank.citizenship')?.dirty || registerForm.get('bank.citizenship')?.touched || showError)">
                       <div *ngIf="registerForm.get('bank.citizenship')?.hasError('required')" style="color: red;">Citizenship Images required</div>
                       
@@ -559,10 +576,32 @@
   
                     <div style="margin-top: 15px; width: 50%;  ">
                       <b >PAN Image*</b>
-                      <div class="row" style="padding-top: 10px;">
+                      <div class="dropzone" style=" height: 200px;
+                      display: table;
+                      width: 80%;
+                      background-color: #eee;
+                      border: dotted 1px #aaa;">
+                       <div class="text-wrapper" style="display: table-cell;
+                       vertical-align: middle;">
+                      <div class="row" style="font-family: sans-serif;
+                      font-size: 1.3em;
+                      text-align:center;">
                         <img *ngFor='let img of imgs' [src]="img" style="width: 100px; height: 100px; margin-top: 10px;">
-                        <input formControlName="panVat" type="file" (change)="selectImgs($event)" multiple >
+                        <input formControlName="panVat" type="file" (change)="selectImgs($event)" multiple style="display: none;">
+                        <div class="file-upload">
+  
+                          
+                       
+                          <button mat-mini-fab color="primary" class="upload-btn"
+                            (click)="fileUpload.click()">
+                              <mat-icon>camera_alt</mat-icon>
+                          </button>
+                          {{file2Name || "No file uploaded yet."}}
                       </div>
+                      </div>
+                      </div>
+                      </div>
+                      
                       <div *ngIf="registerForm.get('bank.panVat')?.invalid && (registerForm.get('bank.panVat')?.dirty || registerForm.get('bank.panVat')?.touched || showError)">
                         <div *ngIf="registerForm.get('bank.panVat')?.hasError('required')" style="color: red;">PAN/VAT Images required</div>
                         
@@ -627,9 +666,30 @@
 
                     <div style="padding-top: 10px;">
                       <b >Upload Bank Cheque Image*</b>
-                      <div class="row" style="padding-top: 10px;">
+                      <div class="dropzone" style=" height: 200px;
+                      display: table;
+                      width: 40%;
+                      background-color: #eee;
+                      border: dotted 1px #aaa;">
+                       <div class="text-wrapper" style="display: table-cell;
+                       vertical-align: middle;">
+                      <div class="row" style="font-family: sans-serif;
+                      font-size: 1.3em;
+                      text-align:center;">
                         <img *ngFor='let image of images' [src]="image" style="width: 100px; height: 100px;">
-                        <input formControlName="bankChequeImage" type="file" (change)="selectImages($event)" multiple >
+                        <input formControlName="bankChequeImage" type="file" (change)="selectImages($event)" multiple style="display: none;" >
+                        <div class="file-upload">
+  
+                          
+                       
+                          <button mat-mini-fab color="primary" class="upload-btn"
+                            (click)="fileUpload.click()">
+                              <mat-icon>camera_alt</mat-icon>
+                          </button>
+                          {{file3Name || "No file uploaded yet."}}
+                      </div>
+                      </div>
+                      </div>
                       </div>
                       <div *ngIf="registerForm.get('bank.bankChequeImage')?.invalid && (registerForm.get('bank.bankChequeImage')?.dirty || registerForm.get('bank.bankChequeImage')?.touched || showError)">
                         <div *ngIf="registerForm.get('bank.bankChequeImage')?.hasError('required')" style="color: red;">Bank Cheque Images required</div>
