@@ -70,7 +70,7 @@ export class RegisterFormComponent implements OnInit{
   isLinear = false;
   showError: boolean = false;
 
-  fileName = '';
+  file1Name = '';
   file2Name = '';
   file3Name = '';
 
@@ -175,7 +175,7 @@ export class RegisterFormComponent implements OnInit{
 
     if (file) {
 
-        this.fileName = file.name;
+        this.file1Name = file.name;
 
         const formData = new FormData();
 
@@ -318,13 +318,24 @@ export class RegisterFormComponent implements OnInit{
   get bankform(){
     return this.registerForm.get("bank") as FormGroup;
   }
- 
+
+
+
+  encryptFormData(formValues: any, encryptionKey: string): string {
+    const encryptedData = AES.encrypt(JSON.stringify(formValues), encryptionKey).toString();
+    return encryptedData;
+  }
+  // decryptFormData(encryptedData: string, encryptionKey: string): any {
+  //   const decryptObject = AES.decrypt(JSON.parse(encryptedData), encryptionKey);
+  //   return decryptObject;
+  // }
 
   HandleSubmit(){
      if (this.registerForm.valid){
       console.log(this.registerForm.value)
      }
      const formValues = this.registerForm.value;
+     console.log('Form Values:', formValues);
 
      this.apiService.postFormData(formValues).subscribe({
       next: (response: any) => {
@@ -339,6 +350,17 @@ export class RegisterFormComponent implements OnInit{
       this.showError = true;
       // return;
     }
+
+    
+      const encryptionKey = 'ABCDEabcde012345'; // Replace with your own encryption key
+      const encryptedData = this.encryptFormData(formValues, encryptionKey);
+      console.log('Encrypted Data:', encryptedData);
+    
+      // Send the encryptedData to the server or perform any other desired action
+
+      // const decryptedObject= this.decryptFormData(encryptedData, encryptionKey);
+      // console.log('Decrypted Object:', decryptedObject);
+
   }
 
   //fetching the data from API in [down menu]
